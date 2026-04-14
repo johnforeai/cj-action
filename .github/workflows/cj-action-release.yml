@@ -7,6 +7,10 @@ on:
         description: 'Release version (e.g., v1.0.0)'
         required: true
         default: ''
+      push_to_docker_hub:
+        description: 'Whether to push to Docker Hub'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -67,6 +71,7 @@ jobs:
   build-and-push-dockerhub:
     name: Build and Push to DockerHub
     needs: create-release
+    if: ${{ github.event.inputs.push_to_docker_hub == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
